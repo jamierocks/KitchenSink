@@ -28,4 +28,29 @@ package uk.jamierocks.kitchensink
  * The KitchenSink extension.
  */
 class KitchenSinkExtension {
+
+    /**
+     * By setting this to {@code true}, KitchenSink will setup your IDE for SpongeVanilla.
+     *
+     * You may have more than one flavour running at once.
+     */
+    boolean vanilla = true
+
+    /**
+     * This setting allows you to specify where SpongeVanilla will be placed.
+     */
+    File vanillaDir = new File("run/vanilla")
+
+    /**
+     * By setting this to {@code true}, KitchenSink will setup your IDE for SpongeForge.
+     *
+     * You may have more than one flavour running at once.
+     */
+    boolean forge = false
+
+    /**
+     * This setting allows you to specify where SpongeForge will be placed.
+     */
+    File forgeDir = new File("run/forge")
+
 }

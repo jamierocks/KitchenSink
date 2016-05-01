@@ -22,23 +22,43 @@
  * THE SOFTWARE.
  */
 
-package uk.jamierocks.kitchensink
+package uk.jamierocks.kitchensink.task
 
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import uk.jamierocks.kitchensink.task.SetupSpongeWorkspace
+import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.TaskAction
+import uk.jamierocks.kitchensink.KitchenSinkExtension
 
 /**
- * The Gradle plugin.
+ * This task ensures of the existence of the run
+ * directories specified in {@link KitchenSinkExtension}.
+ *
+ * This task will also download all the enabled flavours
+ * of Sponge specified in {@link KitchenSinkExtension}.
  */
-class KitchenSinkPlugin implements Plugin<Project> {
+class SetupSpongeWorkspace extends DefaultTask {
 
-    @Override
-    void apply(Project project) {
-        project.with {
-            KitchenSinkExtension kitchenSinkExtension = extensions.create('kitchensink', KitchenSinkExtension)
+    KitchenSinkExtension kitchenSinkExtension
 
-            task('setupSpongeWorkspace', type: SetupSpongeWorkspace)
+    @TaskAction
+    void doTask() {
+        // Checks if Vanilla is enabled
+        if (this.kitchenSinkExtension.vanilla) {
+            // creates its directory if it doesn't already exist
+            if (!this.kitchenSinkExtension.vanillaDir.exists()) {
+                this.kitchenSinkExtension.vanillaDir.mkdirs()
+            }
+
+            // TODO: download SpongeVanilla
+        }
+
+        // Checks if Forge is enabled
+        if (this.kitchenSinkExtension.forge) {
+            // creates its directory if it doesn't already exist
+            if (!this.kitchenSinkExtension.forgeDir.exists()) {
+                this.kitchenSinkExtension.forgeDir.mkdirs()
+            }
+
+            // TODO: download SpongeVanilla
         }
     }
 
