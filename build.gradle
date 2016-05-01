@@ -1,0 +1,51 @@
+plugins {
+    id 'groovy'
+    id 'maven'
+    id 'com.gradle.plugin-publish' version '0.9.1'
+
+    id 'idea'
+    id 'eclipse'
+
+    id 'net.minecrell.licenser' version '0.1.5'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = 'uk.jamierocks'
+version = '1.2-SNAPSHOT'
+description = 'A Gradle plugin for testing Sponge plugins.'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+license {
+    header file('HEADER.txt')
+    include '**/*.java'
+    include '**/*.groovy'
+}
+
+pluginBundle {
+    website = 'https://github.com/jamierocks/KitchenSink'
+    vcsUrl = 'https://github.com/jamierocks/KitchenSink'
+    description = project.description
+    tags = ['sponge']
+
+    plugins {
+        kitchensinkPlugin {
+            id = 'uk.jamierocks.kitchensink'
+            displayName = 'KitchenSink'
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.13'
+}
