@@ -22,30 +22,12 @@
  * THE SOFTWARE.
  */
 
-package uk.jamierocks.kitchensink
-
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import uk.jamierocks.kitchensink.task.SetupSpongeWorkspace
+package uk.jamierocks.kitchensink.util
 
 /**
- * The Gradle plugin.
+ * All those constants.
  */
-class KitchenSinkPlugin implements Plugin<Project> {
+class Constants {
 
-    @Override
-    void apply(Project project) {
-        project.with {
-            KitchenSinkExtension extension = extensions.create('kitchensink', KitchenSinkExtension)
-
-            task('setupSpongeWorkspace', type: SetupSpongeWorkspace)
-
-            afterEvaluate {
-                tasks.setupSpongeWorkspace.with {
-                    kitchenSinkExtension = extension
-                }
-            }
-        }
-    }
-
+    static final String SPONGE_REPO = "https://repo.spongepowered.org/maven/";
 }

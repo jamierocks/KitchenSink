@@ -13,11 +13,10 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 group = 'uk.jamierocks'
-version = '1.2-SNAPSHOT'
-description = 'A Gradle plugin for testing Sponge plugins.'
+version = '1.0.0-SNAPSHOT'
+description = 'A Gradle plugin for running Sponge plugins from within your IDE, without complicated setup procedures.'
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 

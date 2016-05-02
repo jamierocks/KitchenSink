@@ -34,7 +34,12 @@ class KitchenSinkExtension {
      *
      * You may have more than one flavour running at once.
      */
-    boolean vanilla = true
+    boolean vanilla = false
+
+    /**
+     * This setting sets the version of SpongeVanilla that will be obtained.
+     */
+    String vanillaVersion
 
     /**
      * This setting allows you to specify where SpongeVanilla will be placed.

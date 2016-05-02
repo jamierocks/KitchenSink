@@ -24,9 +24,11 @@
 
 package uk.jamierocks.kitchensink.task
 
+import org.apache.commons.io.FileUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import uk.jamierocks.kitchensink.KitchenSinkExtension
+import uk.jamierocks.kitchensink.util.Constants
 
 /**
  * This task ensures of the existence of the run
@@ -48,7 +50,16 @@ class SetupSpongeWorkspace extends DefaultTask {
                 this.kitchenSinkExtension.vanillaDir.mkdirs()
             }
 
-            // TODO: download SpongeVanilla
+            File outputJar = new File(this.kitchenSinkExtension.vanillaDir,
+                    "spongevanilla-" + this.kitchenSinkExtension.vanillaVersion + ".jar")
+
+            if (!outputJar.exists()) {
+                URL jarUrl = new URL(Constants.SPONGE_REPO + "org/spongepowered/spongevanilla/" +
+                        this.kitchenSinkExtension.vanillaVersion + "/spongevanilla-" +
+                        this.kitchenSinkExtension.vanillaVersion + ".jar")
+
+                FileUtils.copyURLToFile(jarUrl, outputJar)
+            }
         }
 
         // Checks if Forge is enabled
@@ -58,7 +69,7 @@ class SetupSpongeWorkspace extends DefaultTask {
                 this.kitchenSinkExtension.forgeDir.mkdirs()
             }
 
-            // TODO: download SpongeVanilla
+            // TODO: download SpongeForge
         }
     }
 
