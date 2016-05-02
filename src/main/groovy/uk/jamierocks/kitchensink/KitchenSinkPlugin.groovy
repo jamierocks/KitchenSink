@@ -26,6 +26,7 @@ package uk.jamierocks.kitchensink
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import uk.jamierocks.kitchensink.task.GenIntellijTasksTask
 import uk.jamierocks.kitchensink.task.SetupSpongeWorkspace
 
 /**
@@ -39,9 +40,13 @@ class KitchenSinkPlugin implements Plugin<Project> {
             KitchenSinkExtension extension = extensions.create('kitchensink', KitchenSinkExtension)
 
             task('setupSpongeWorkspace', type: SetupSpongeWorkspace)
+            task('genIntellijTasks', type: GenIntellijTasksTask)
 
             afterEvaluate {
                 tasks.setupSpongeWorkspace.with {
+                    kitchenSinkExtension = extension
+                }
+                tasks.genIntellijTasks.with {
                     kitchenSinkExtension = extension
                 }
             }

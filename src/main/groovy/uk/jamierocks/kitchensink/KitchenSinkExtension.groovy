@@ -44,7 +44,7 @@ class KitchenSinkExtension {
     /**
      * This setting allows you to specify where SpongeVanilla will be placed.
      */
-    File vanillaDir = new File("run/vanilla")
+    String vanillaDir = "run/vanilla"
 
     /**
      * By setting this to {@code true}, KitchenSink will setup your IDE for SpongeForge.
@@ -56,6 +56,6 @@ class KitchenSinkExtension {
     /**
      * This setting allows you to specify where SpongeForge will be placed.
      */
-    File forgeDir = new File("run/forge")
+    String forgeDir = "run/forge"
 
 }

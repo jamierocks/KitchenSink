@@ -24,54 +24,49 @@
 
 package uk.jamierocks.kitchensink.task
 
-import org.apache.commons.io.FileUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import uk.jamierocks.kitchensink.KitchenSinkExtension
-import uk.jamierocks.kitchensink.util.Constants
+import uk.jamierocks.kitchensink.KitchenSinkPlugin
+
+import java.nio.charset.Charset
 
 /**
- * This task ensures of the existence of the run
- * directories specified in {@link KitchenSinkExtension}.
- *
- * This task will also download all the enabled flavours
- * of Sponge specified in {@link KitchenSinkExtension}.
+ * This task will create run configurations for IntelliJ.
  */
-class SetupSpongeWorkspace extends DefaultTask {
+class GenIntellijTasksTask extends DefaultTask {
 
     KitchenSinkExtension kitchenSinkExtension
 
     @TaskAction
     void doTask() {
-        // Checks if Vanilla is enabled
-        if (this.kitchenSinkExtension.vanilla) {
-            // creates its directory if it doesn't already exist
-            File vanillaDir = new File(this.kitchenSinkExtension.vanillaDir)
-            if (!vanillaDir.exists()) {
-                vanillaDir.mkdirs()
-            }
-
-            File outputJar = new File(this.kitchenSinkExtension.vanillaDir,
-                    "spongevanilla-" + this.kitchenSinkExtension.vanillaVersion + ".jar")
-
-            if (!outputJar.exists()) {
-                URL jarUrl = new URL(Constants.SPONGE_REPO + "org/spongepowered/spongevanilla/" +
-                        this.kitchenSinkExtension.vanillaVersion + "/spongevanilla-" +
-                        this.kitchenSinkExtension.vanillaVersion + ".jar")
-
-                FileUtils.copyURLToFile(jarUrl, outputJar)
-            }
+        // Check runConfigurations directory exists
+        File runConfigurations = new File(".idea", "runConfigurations")
+        if (!runConfigurations.exists()) {
+            runConfigurations.mkdirs()
         }
 
-        // Checks if Forge is enabled
-        if (this.kitchenSinkExtension.forge) {
-            // creates its directory if it doesn't already exist
-            File forgeDir = new File(this.kitchenSinkExtension.forgeDir)
-            if (!forgeDir.exists()) {
-                forgeDir.mkdirs()
+        // SpongeVanilla
+        if (this.kitchenSinkExtension.vanilla) {
+            StringBuilder builder = new StringBuilder()
+
+            InputStreamReader reader =
+                    new InputStreamReader(KitchenSinkPlugin.getClassLoader().getResourceAsStream("ideaTemplate.xml"))
+
+            for (String line : reader.readLines()) {
+                builder.append(line
+                        .replace("{{ flavour }}", "SpongeVanilla")
+                        .replace("{{ version }}", this.kitchenSinkExtension.vanillaVersion)
+                        .replace("{{ dir }}", this.kitchenSinkExtension.vanillaDir)
+                        .replace("{{ jar }}", "spongevanilla-" + this.kitchenSinkExtension.vanillaVersion + ".jar"))
+                builder.append("\n")
             }
 
-            // TODO: download SpongeForge
+            reader.close()
+
+            new File(runConfigurations, "SpongeVanilla.xml").newOutputStream().withStream {
+                s -> s.write(builder.toString().getBytes(Charset.forName("utf-8")))
+            }
         }
     }
 

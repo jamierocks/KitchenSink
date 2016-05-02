@@ -13,7 +13,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 group = 'uk.jamierocks'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.0'
 description = 'A Gradle plugin for running Sponge plugins from within your IDE, without complicated setup procedures.'
 
 repositories {
