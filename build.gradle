@@ -9,33 +9,49 @@ plugins {
     id 'net.minecrell.licenser' version '0.1.5'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+allprojects {
+    apply plugin: 'net.minecrell.licenser'
 
-group = 'uk.jamierocks'
-version = '1.0.0'
-description = 'A Gradle plugin for running Sponge plugins from within your IDE, without complicated setup procedures.'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+    group = 'uk.jamierocks'
+    version = '1.1.0-SNAPSHOT'
+    description = 'A Gradle plugin for running Sponge plugins from within your IDE, without complicated setup procedures.'
+
+    repositories {
+        mavenCentral()
+    }
+
+    license {
+        header rootProject.file('HEADER.txt')
+        include '**/*.java'
+        include '**/*.groovy'
+    }
+}
+
+configurations {
+    library
 }
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
+
+    library project(':LaunchTool')
 }
 
-license {
-    header file('HEADER.txt')
-    include '**/*.java'
-    include '**/*.groovy'
+jar {
+    into('lib') {
+        from configurations.library
+    }
 }
 
 pluginBundle {
     website = 'https://github.com/jamierocks/KitchenSink'
     vcsUrl = 'https://github.com/jamierocks/KitchenSink'
     description = project.description
-    tags = ['sponge']
+    tags = ['sponge', 'minecraft']
 
     plugins {
         kitchensinkPlugin {

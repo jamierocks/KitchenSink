@@ -57,8 +57,7 @@ class GenIntellijTasksTask extends DefaultTask {
                 builder.append(line
                         .replace("{{ flavour }}", "SpongeVanilla")
                         .replace("{{ version }}", this.kitchenSinkExtension.vanillaVersion)
-                        .replace("{{ dir }}", this.kitchenSinkExtension.vanillaDir)
-                        .replace("{{ jar }}", "spongevanilla-" + this.kitchenSinkExtension.vanillaVersion + ".jar"))
+                        .replace("{{ dir }}", this.kitchenSinkExtension.vanillaDir))
                 builder.append("\n")
             }
 

@@ -28,7 +28,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import uk.jamierocks.kitchensink.task.GenIntellijTasksTask
 import uk.jamierocks.kitchensink.task.SetupSpongeWorkspace
-
+import uk.jamierocks.kitchensink.util.Constants
 /**
  * The Gradle plugin.
  */
@@ -36,6 +36,16 @@ class KitchenSinkPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
+        // Add LaunchTool to dependencies
+        File kitchenSinkDir = new File("build", "kitchensink")
+        File launchTool = new File(kitchenSinkDir, "LaunchTool-" + Constants.VERSION + ".jar")
+
+        if (launchTool.exists()) {
+            project.dependencies {
+                compile project.files(launchTool)
+            }
+        }
+
         project.with {
             KitchenSinkExtension extension = extensions.create('kitchensink', KitchenSinkExtension)
 

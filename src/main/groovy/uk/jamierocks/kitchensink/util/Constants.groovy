@@ -29,6 +29,8 @@ package uk.jamierocks.kitchensink.util
  */
 class Constants {
 
-    static final String SPONGE_REPO = "https://repo.spongepowered.org/maven/";
+    static final String VERSION = "1.1.0-SNAPSHOT"
+
+    static final String SPONGE_REPO = "https://repo.spongepowered.org/maven/"
 
 }
